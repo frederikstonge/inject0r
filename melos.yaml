@@ -1,0 +1,5 @@
+name: inject0r
+
+packages:
+  - packages/*
+  - examples/*

@@ -1,0 +1,19 @@
+name: inject0r_bloc
+description: "A new Flutter package project."
+version: 0.0.1
+homepage: https://www.github.com/frederikstonge/inject0r
+
+environment:
+  sdk: ^3.8.1
+  flutter: ">=3.32.4"
+
+dependencies:
+  bloc: ^9.0.0
+  flutter:
+    sdk: flutter
+  inject0r: ^0.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
