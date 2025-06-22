@@ -69,10 +69,10 @@ class _ContainerScopeState extends State<ContainerScope> {
 
     assert(
       !(provider!.providerType == ProviderType.scoped && widget.primary),
-      'Cannot get a scoped provider from a non-primary container.',
+      'Cannot get a scoped provider from a primary container.',
     );
 
-    // If the provider is a singleton, get or create it from the root container
+    // If the provider is a singleton, get it from the root container
     if (provider!.providerType == ProviderType.singleton && !widget.primary) {
       final root = getRoot();
       if (root != null) {
@@ -99,11 +99,6 @@ class _ContainerScopeState extends State<ContainerScope> {
 
   /// Creates a new container scope with the current service provider.
   ContainerScope createScope(Widget child) {
-    assert(
-      widget.primary,
-      'Cannot create a scoped container from a non-primary container.',
-    );
-
     return ContainerScope._(
       primary: false,
       serviceProvider: widget.serviceProvider,
