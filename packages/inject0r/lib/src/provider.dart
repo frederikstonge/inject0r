@@ -6,11 +6,13 @@ import 'provider_type.dart';
 class Provider<T> {
   final T Function(BuildContext context) create;
   final ProviderType providerType;
+  final String? key;
   final void Function(T)? dispose;
 
   const Provider({
     required this.create,
     required this.providerType,
-    this.dispose,
+    required this.dispose,
+    this.key,
   });
 }

@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
 
 import 'instance.dart';
@@ -31,8 +32,8 @@ class ContainerScope extends StatefulWidget {
        );
 
   /// Get an instance of type [T] from the container scope.
-  static T get<T>({required BuildContext context}) =>
-      context.findAncestorStateOfType<_ContainerScopeState>()!.get<T>();
+  static T get<T>({required BuildContext context, String? key}) =>
+      context.findAncestorStateOfType<_ContainerScopeState>()!.get<T>(key: key);
 
   /// Creates a new container scope from the current context.
   static ContainerScope createScope({
@@ -60,33 +61,34 @@ class _ContainerScopeState extends State<ContainerScope> {
   }
 
   /// Get an instance of type [T] from the container scope.
-  T get<T>() {
+  T get<T>({required String? key}) {
     final provider = widget.serviceProvider.providers
         .whereType<Provider<T>>()
-        .firstOrNull;
+        .firstWhereOrNull((p) => p.key == key);
 
-    assert(provider != null, 'No provider found for type $T');
+    assert(provider != null, 'No provider found for type $T${key != null ? ' with key $key' : ''}.');
 
     assert(
       !(provider!.providerType == ProviderType.scoped && widget.primary),
-      'Cannot get a scoped provider from a primary container.',
+      'Cannot get a scoped instance from a primary container.',
     );
 
     // If the provider is a singleton, get it from the root container
     if (provider!.providerType == ProviderType.singleton && !widget.primary) {
       final root = getRoot();
       if (root != null) {
-        return getRoot()!.get<T>();
+        return getRoot()!.get<T>(key: key);
       }
     }
 
     final instance = _instances.whereType<Instance<T>>().firstWhere(
       // Create a new instance all the time of transient providers
-      (i) => i.providerType != ProviderType.transient,
+      (i) => i.providerType != ProviderType.transient && i.key == key,
       orElse: () {
         final i = Instance<T>(
           value: provider.create(context),
           providerType: provider.providerType,
+          key: key,
           dispose: provider.dispose,
         );
         _instances.add(i);

@@ -49,6 +49,18 @@ void main() {
     },
   );
 
+  serviceProvider.registerScoped<CounterCubit>(
+    key: 'test',
+    create: (context) {
+      print('Creating scoped test CounterCubit');
+      return CounterCubit();
+    },
+    dispose: (cubit) {
+      print('Disposing scoped test CounterCubit');
+      cubit.close();
+    },
+  );
+
   runApp(
     ContainerScope.primary(
       serviceProvider: serviceProvider,

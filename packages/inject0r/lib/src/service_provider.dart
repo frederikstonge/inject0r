@@ -10,22 +10,24 @@ class ServiceProvider {
   final List<Provider> providers = [];
 
   /// Register a singleton provider of type [T] with the specified creation function and disposal function.
-  void registerSingleton<T>({required T Function(BuildContext context) create, void Function(T)? dispose}) {
+  void registerSingleton<T>({required T Function(BuildContext context) create, String? key, void Function(T)? dispose}) {
     providers.add(
       Provider<T>(
         providerType: ProviderType.singleton,
         create: create,
+        key: key,
         dispose: dispose,
       ),
     );
   }
 
   /// Register a scoped provider of type [T] with the specified creation function and disposal function.
-  void registerScoped<T>({ required T Function(BuildContext context) create, void Function(T)? dispose}) {
+  void registerScoped<T>({ required T Function(BuildContext context) create, String? key, void Function(T)? dispose}) {
     providers.add(
       Provider<T>(
         providerType: ProviderType.scoped,
         create: create,
+        key: key,
         dispose: dispose,
       ),
     );

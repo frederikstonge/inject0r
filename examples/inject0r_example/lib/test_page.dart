@@ -13,6 +13,7 @@ class TestPage extends StatelessWidget {
     final pi = context.get<double>();
 
     return BlocConsumer<CounterCubit, int>(
+      blocKey: 'test',
       listener: (context, state) => print('Cubit value: $state'),
       builder: (context, state) {
         return Scaffold(
@@ -27,13 +28,13 @@ class TestPage extends StatelessWidget {
                 Text('Counter: $state'),
                 ElevatedButton(
                   onPressed: () {
-                    context.get<CounterCubit>().increment();
+                    context.get<CounterCubit>(key: 'test').increment();
                   },
                   child: const Text('Increment Counter'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    context.get<CounterCubit>().decrement();
+                    context.get<CounterCubit>(key: 'test').decrement();
                   },
                   child: const Text('Decrement Counter'),
                 ),

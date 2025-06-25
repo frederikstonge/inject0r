@@ -9,6 +9,7 @@ class BlocConsumer<TBloc extends StateStreamable<TState>, TState>
   final void Function(BuildContext context, TState state) listener;
   final Widget Function(BuildContext context, TState state) builder;
   final TBloc? bloc;
+  final String? blocKey;
   final bool Function(TState previous, TState current)? listenWhen;
   final bool Function(TState previous, TState current)? rebuildWhen;
 
@@ -17,9 +18,13 @@ class BlocConsumer<TBloc extends StateStreamable<TState>, TState>
     required this.listener,
     required this.builder,
     this.bloc,
+    this.blocKey,
     this.listenWhen,
     this.rebuildWhen,
-  });
+  }) : assert(
+         bloc == null || blocKey == null,
+         'You cannot provide both a bloc and a blocKey. Use one or the other.',
+       );
 
   @override
   State<BlocConsumer<TBloc, TState>> createState() =>
@@ -34,7 +39,7 @@ class _BlocConsumerState<TBloc extends StateStreamable<TState>, TState>
 
   @override
   void initState() {
-    _bloc = widget.bloc ?? context.get<TBloc>();
+    _bloc = widget.bloc ?? context.get<TBloc>(key: widget.blocKey);
     _state = _bloc.state;
     _subscription = _bloc.stream.listen((data) {
       if (widget.listenWhen == null || widget.listenWhen!(_state, data)) {
