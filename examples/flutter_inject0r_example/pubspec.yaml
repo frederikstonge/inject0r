@@ -14,6 +14,7 @@ dependencies:
     sdk: flutter
   go_router: ^15.2.3
   inject0r: ^0.1.0
+  inject0r_example: ^0.1.0
   flutter_inject0r: ^0.1.0
   flutter_inject0r_bloc: ^0.1.0
 

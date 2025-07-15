@@ -1,7 +1,6 @@
 import 'package:jaspr/jaspr.dart';
 import 'package:jaspr_router/jaspr_router.dart';
-
-import '../constants/theme.dart';
+import 'package:jaspr_static_inject0r_example/constants/theme.dart';
 
 class Header extends StatelessComponent {
   const Header({super.key});

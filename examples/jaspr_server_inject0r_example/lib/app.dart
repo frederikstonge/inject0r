@@ -1,13 +1,12 @@
 import 'package:inject0r/inject0r.dart';
+import 'package:inject0r_example/inject0r_example.dart';
 import 'package:jaspr/jaspr.dart';
 import 'package:jaspr_inject0r/jaspr_inject0r.dart';
 import 'package:jaspr_router/jaspr_router.dart';
-import 'package:jaspr_server_inject0r_example/counter_cubit.dart';
+import 'package:jaspr_server_inject0r_example/components/header.dart';
+import 'package:jaspr_server_inject0r_example/pages/about.dart';
+import 'package:jaspr_server_inject0r_example/pages/home.dart';
 import 'package:jaspr_server_inject0r_example/scoped_route.dart';
-
-import 'components/header.dart';
-import 'pages/about.dart';
-import 'pages/home.dart';
 
 // The main component of your application.
 //

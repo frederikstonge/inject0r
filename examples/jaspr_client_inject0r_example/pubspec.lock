@@ -368,6 +368,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  inject0r_example:
+    dependency: "direct main"
+    description:
+      path: "../inject0r_example"
+      relative: true
+    source: path
+    version: "1.0.0"
   io:
     dependency: transitive
     description:

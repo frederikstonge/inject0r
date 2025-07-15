@@ -1,4 +1,4 @@
-import 'provider_type.dart';
+import 'package:inject0r/inject0r.dart';
 
 /// Represents a provider that creates instances of type [T].
 class Provider<T, TContext> {

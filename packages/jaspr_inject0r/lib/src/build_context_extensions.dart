@@ -1,6 +1,5 @@
 import 'package:jaspr/jaspr.dart';
-
-import 'container_scope.dart';
+import 'package:jaspr_inject0r/jaspr_inject0r.dart';
 
 extension InheritedContainerScopeExtensions on BuildContext {
   /// Get instance of type [T] from the container scope.

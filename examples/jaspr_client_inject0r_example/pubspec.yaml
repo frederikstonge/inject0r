@@ -7,6 +7,7 @@ environment:
 
 dependencies:
   inject0r: ^0.1.0
+  inject0r_example: ^0.1.0
   jaspr: ^0.19.1
   jaspr_router: ^0.7.0
   jaspr_inject0r: ^0.1.0

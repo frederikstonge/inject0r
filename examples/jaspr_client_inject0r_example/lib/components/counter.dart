@@ -1,7 +1,7 @@
+import 'package:inject0r_example/inject0r_example.dart';
 import 'package:jaspr/jaspr.dart';
 import 'package:jaspr_inject0r/jaspr_inject0r.dart';
 import 'package:jaspr_inject0r_bloc/jaspr_inject0r_bloc.dart';
-import 'package:jaspr_client_inject0r_example/counter_cubit.dart';
 
 class Counter extends StatelessComponent {
   const Counter({super.key});

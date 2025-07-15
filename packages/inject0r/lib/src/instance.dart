@@ -1,4 +1,4 @@
-import 'provider_type.dart';
+import 'package:inject0r/inject0r.dart';
 
 /// Represents an instance of a dependency with its type and disposal function.
 class Instance<T> {

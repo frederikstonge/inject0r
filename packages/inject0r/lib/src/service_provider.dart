@@ -1,5 +1,4 @@
-import 'provider.dart';
-import 'provider_type.dart';
+import 'package:inject0r/inject0r.dart';
 
 /// ServiceProvider is responsible for managing the lifecycle of providers
 class ServiceProvider<TContext> {

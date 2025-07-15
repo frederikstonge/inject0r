@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inject0r/flutter_inject0r.dart';
 import 'package:flutter_inject0r_bloc/flutter_inject0r_bloc.dart';
-
-import 'counter_cubit.dart';
+import 'package:inject0r_example/inject0r_example.dart';
 
 class TestPage extends StatelessWidget {
   const TestPage({super.key});
