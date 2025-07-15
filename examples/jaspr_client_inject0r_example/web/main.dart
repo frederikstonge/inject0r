@@ -5,7 +5,7 @@
 // Client-specific jaspr import.
 import 'package:jaspr/browser.dart';
 // Imports the [App] component.
-import 'package:jaspr_inject0r_example/app.dart';
+import 'package:jaspr_client_inject0r_example/app.dart';
 
 void main() {
   // Attaches the [App] component to the <body> of the page.

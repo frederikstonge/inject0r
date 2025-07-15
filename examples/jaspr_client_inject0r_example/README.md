@@ -1,4 +1,4 @@
-# jaspr_inject0r_example
+# jaspr_client_inject0r_example
 
 A new Jaspr project
 

@@ -25,11 +25,22 @@
             "flutterMode": "release"
         },
         {
-            "name": "jaspr_inject0r_example",
-            "cwd": "examples/jaspr_inject0r_example",
+            "name": "jaspr_client_inject0r_example",
+            "cwd": "examples/jaspr_client_inject0r_example",
             "request": "launch",
             "type": "jaspr",
         },
-
+        {
+            "name": "jaspr_server_inject0r_example",
+            "cwd": "examples/jaspr_server_inject0r_example",
+            "request": "launch",
+            "type": "jaspr",
+        },
+        {
+            "name": "jaspr_static_inject0r_example",
+            "cwd": "examples/jaspr_static_inject0r_example",
+            "request": "launch",
+            "type": "jaspr",
+        },
     ]
 }
