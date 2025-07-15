@@ -1,18 +1,16 @@
-import 'package:flutter/widgets.dart';
-
 import 'provider.dart';
 import 'provider_type.dart';
 
 /// ServiceProvider is responsible for managing the lifecycle of providers
-class ServiceProvider {
+class ServiceProvider<TContext> {
   ServiceProvider();
 
   final List<Provider> providers = [];
 
   /// Register a singleton provider of type [T] with the specified creation function and disposal function.
-  void registerSingleton<T>({required T Function(BuildContext context) create, String? key, void Function(T)? dispose}) {
+  void registerSingleton<T>({required T Function(TContext context) create, String? key, void Function(T)? dispose}) {
     providers.add(
-      Provider<T>(
+      Provider<T, TContext>(
         providerType: ProviderType.singleton,
         create: create,
         key: key,
@@ -22,9 +20,9 @@ class ServiceProvider {
   }
 
   /// Register a scoped provider of type [T] with the specified creation function and disposal function.
-  void registerScoped<T>({ required T Function(BuildContext context) create, String? key, void Function(T)? dispose}) {
+  void registerScoped<T>({ required T Function(TContext context) create, String? key, void Function(T)? dispose}) {
     providers.add(
-      Provider<T>(
+      Provider<T, TContext>(
         providerType: ProviderType.scoped,
         create: create,
         key: key,
@@ -34,9 +32,9 @@ class ServiceProvider {
   }
 
   /// Register a transient provider of type [T] with the specified creation function and disposal function.
-  void registerTransient<T>({required T Function(BuildContext context) create, void Function(T)? dispose}) {
+  void registerTransient<T>({required T Function(TContext context) create, void Function(T)? dispose}) {
     providers.add(
-      Provider<T>(
+      Provider<T, TContext>(
         providerType: ProviderType.transient,
         create: create,
         dispose: dispose,

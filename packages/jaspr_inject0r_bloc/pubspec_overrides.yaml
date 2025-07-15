@@ -1,0 +1,6 @@
+# melos_managed_dependency_overrides: inject0r,jaspr_inject0r
+dependency_overrides:
+  inject0r:
+    path: ../inject0r
+  jaspr_inject0r:
+    path: ../jaspr_inject0r

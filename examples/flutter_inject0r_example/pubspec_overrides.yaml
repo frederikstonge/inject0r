@@ -1,0 +1,8 @@
+# melos_managed_dependency_overrides: inject0r,flutter_inject0r,flutter_inject0r_bloc
+dependency_overrides:
+  inject0r:
+    path: ../../packages/inject0r
+  flutter_inject0r:
+    path: ../../packages/flutter_inject0r
+  flutter_inject0r_bloc:
+    path: ../../packages/flutter_inject0r_bloc

@@ -1,0 +1,4 @@
+# melos_managed_dependency_overrides: inject0r
+dependency_overrides:
+  inject0r:
+    path: ../inject0r
