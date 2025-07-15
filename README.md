@@ -1,2 +1,2 @@
 # inject0r
-Another dependency injection library for Flutter
+Another dependency injection library for Flutter and Jaspr
