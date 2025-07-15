@@ -1,10 +1,8 @@
-import 'package:flutter/widgets.dart';
-
 import 'provider_type.dart';
 
 /// Represents a provider that creates instances of type [T].
-class Provider<T> {
-  final T Function(BuildContext context) create;
+class Provider<T, TContext> {
+  final T Function(TContext context) create;
   final ProviderType providerType;
   final String? key;
   final void Function(T)? dispose;

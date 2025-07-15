@@ -1,5 +1,6 @@
 library;
 
-export 'src/build_context_extensions.dart';
-export 'src/container_scope.dart';
+export 'src/instance.dart';
+export 'src/provider.dart';
+export 'src/provider_type.dart';
 export 'src/service_provider.dart';
