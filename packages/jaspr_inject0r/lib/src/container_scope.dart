@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:inject0r/inject0r.dart';
 import 'package:jaspr/jaspr.dart';
 
-/// A widget that provides a container scope for dependency injection.
+/// A component that provides a container scope for dependency injection.
 class ContainerScope extends StatefulComponent {
   final bool primary;
   final ServiceProvider<BuildContext> serviceProvider;
@@ -28,8 +28,15 @@ class ContainerScope extends StatefulComponent {
        );
 
   /// Get an instance of type [T] from the container scope.
-  static T get<T>({required BuildContext context, String? key}) =>
-      context.findAncestorStateOfType<_ContainerScopeState>()!.get<T>(key: key);
+  static T get<T>({required BuildContext context, String? key}) {
+    final state = context.findAncestorStateOfType<_ContainerScopeState>();
+    assert(
+      state != null,
+      'No ContainerScope found in the context. Make sure to wrap your component tree with a ContainerScope.',
+    );
+
+    return state!.get<T>(key: key);
+  }
 
   /// Creates a new container scope from the current context.
   static ContainerScope createScope({
@@ -40,8 +47,9 @@ class ContainerScope extends StatefulComponent {
     final state = context.findAncestorStateOfType<_ContainerScopeState>();
     assert(
       state != null,
-      'No ContainerScope found in the context. Make sure to wrap your widget tree with a ContainerScope.',
+      'No ContainerScope found in the context. Make sure to wrap your component tree with a ContainerScope.',
     );
+
     return state!.createScope(key, children);
   }
 

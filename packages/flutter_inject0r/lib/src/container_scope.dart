@@ -30,7 +30,13 @@ class ContainerScope extends StatefulWidget {
 
   /// Get an instance of type [T] from the container scope.
   static T get<T>({required BuildContext context, String? key}) {
-    return context.findAncestorStateOfType<_ContainerScopeState>()!.get<T>(key: key);
+    final state = context.findAncestorStateOfType<_ContainerScopeState>();
+    assert(
+      state != null,
+      'No ContainerScope found in the context. Make sure to wrap your widget tree with a ContainerScope.',
+    );
+
+    return state!.get<T>(key: key);
   }
 
   /// Creates a new container scope from the current context.
@@ -44,6 +50,7 @@ class ContainerScope extends StatefulWidget {
       state != null,
       'No ContainerScope found in the context. Make sure to wrap your widget tree with a ContainerScope.',
     );
+    
     return state!.createScope(key, child);
   }
 
@@ -114,8 +121,9 @@ class _ContainerScopeState extends State<ContainerScope> {
   }
 
   /// Get the root container scope state.
-  _ContainerScopeState? _getRoot() =>
-      context.findRootAncestorStateOfType<_ContainerScopeState>();
+  _ContainerScopeState? _getRoot() {
+    return context.findRootAncestorStateOfType<_ContainerScopeState>();
+  }
 
   @override
   Widget build(BuildContext context) => widget.child;
