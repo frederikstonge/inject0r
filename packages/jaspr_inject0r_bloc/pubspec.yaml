@@ -2,13 +2,14 @@ name: jaspr_inject0r_bloc
 description: "A new Flutter package project."
 version: 0.0.1
 homepage: https://www.github.com/frederikstonge/inject0r
+resolution: workspace
 
 environment:
-  sdk: ^3.8.1
+  sdk: ^3.11.5
 
 dependencies:
   bloc: ^9.0.0
-  jaspr: ^0.19.1
+  jaspr: ^0.23.1
   jaspr_inject0r: ^0.0.1
 
 dev_dependencies:

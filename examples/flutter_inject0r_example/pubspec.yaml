@@ -1,22 +1,23 @@
 name: flutter_inject0r_example
 description: "A new Flutter project."
-
+resolution: workspace
 
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.8.1
+  sdk: ^3.11.5
+  flutter: ^3.41.7
 
 dependencies:
   bloc: ^9.0.0
   cupertino_icons: ^1.0.8
   flutter:
     sdk: flutter
-  go_router: ^15.2.3
-  inject0r: ^0.1.0
-  inject0r_example: ^0.1.0
-  flutter_inject0r: ^0.1.0
-  flutter_inject0r_bloc: ^0.1.0
+  go_router: ^17.2.3
+  inject0r: ^0.0.1
+  inject0r_example: ^1.0.0
+  flutter_inject0r: ^0.0.1
+  flutter_inject0r_bloc: ^0.0.1
 
 
 dev_dependencies:

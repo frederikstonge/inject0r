@@ -6,25 +6,25 @@ import 'package:jaspr/jaspr.dart';
 class ContainerScope extends StatefulComponent {
   final bool primary;
   final ServiceProvider<BuildContext> serviceProvider;
-  final Iterable<Component> children;
+  final Component child;
 
   const ContainerScope._({
     super.key,
     required this.primary,
     required this.serviceProvider,
-    required this.children,
+    required this.child,
   });
 
   /// Creates a primary container scope.
   const ContainerScope.primary({
     Key? key,
     required ServiceProvider<BuildContext> serviceProvider,
-    required Iterable<Component> children,
+    required Component child,
   }) : this._(
          key: key,
          primary: true,
          serviceProvider: serviceProvider,
-         children: children,
+         child: child,
        );
 
   /// Get an instance of type [T] from the container scope.
@@ -42,7 +42,7 @@ class ContainerScope extends StatefulComponent {
   static ContainerScope createScope({
     Key? key,
     required BuildContext context,
-    required Iterable<Component> children,
+    required Component child,
   }) {
     final state = context.findAncestorStateOfType<_ContainerScopeState>();
     assert(
@@ -50,7 +50,7 @@ class ContainerScope extends StatefulComponent {
       'No ContainerScope found in the context. Make sure to wrap your component tree with a ContainerScope.',
     );
 
-    return state!.createScope(key, children);
+    return state!.createScope(key, child);
   }
 
   @override
@@ -114,12 +114,12 @@ class _ContainerScopeState extends State<ContainerScope> {
   }
 
   /// Creates a new container scope with the current service provider.
-  ContainerScope createScope(Key? key, Iterable<Component> children) {
+  ContainerScope createScope(Key? key, Component child) {
     return ContainerScope._(
       key: key,
       primary: false,
       serviceProvider: component.serviceProvider,
-      children: children,
+      child: child,
     );
   }
 
@@ -138,7 +138,7 @@ class _ContainerScopeState extends State<ContainerScope> {
   }
 
   @override
-  Iterable<Component> build(BuildContext context) sync* {
-  yield* component.children;
+  Component build(BuildContext context) {
+    return component;
   } 
 }

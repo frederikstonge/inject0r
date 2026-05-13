@@ -6,7 +6,7 @@ import 'package:jaspr_inject0r/jaspr_inject0r.dart';
 
 class BlocBuilder<TBloc extends StateStreamable<TState>, TState>
     extends StatefulComponent {
-  final Iterable<Component> Function(BuildContext context, TState state) builder;
+  final Component Function(BuildContext context, TState state) builder;
   final TBloc? bloc;
   final String? blocKey;
   final bool Function(TState previous, TState current)? rebuildWhen;
@@ -57,7 +57,7 @@ class _BlocBuilderState<TBloc extends StateStreamable<TState>, TState>
   }
 
   @override
-  Iterable<Component> build(BuildContext context) {
+  Component build(BuildContext context) {
     return component.builder(context, _state);
   }
 }

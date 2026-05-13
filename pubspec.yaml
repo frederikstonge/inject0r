@@ -1,8 +1,10 @@
 name: inject0r_workspace
+publish_to: none
 
 environment:
-  sdk: ^3.8.0
-  flutter: ">=3.32.0"
+  sdk: ^3.11.5
 
-dev_dependencies:
-  melos: ^6.3.3
+workspace:
+  - packages/*
+  - examples/*
+

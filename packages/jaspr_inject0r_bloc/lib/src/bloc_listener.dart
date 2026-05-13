@@ -10,12 +10,12 @@ class BlocListener<TBloc extends StateStreamable<TState>, TState>
   final TBloc? bloc;
   final String? blocKey;
   final bool Function(TState previous, TState current)? listenWhen;
-  final Iterable<Component> children;
+  final Component child;
 
   const BlocListener({
     super.key,
     required this.listener,
-    required this.children,
+    required this.child,
     this.bloc,
     this.blocKey,
     this.listenWhen,
@@ -57,7 +57,7 @@ class _BlocListenerState<TBloc extends StateStreamable<TState>, TState>
   }
 
   @override
-  Iterable<Component> build(BuildContext context) {
-    return component.children;
+  Component build(BuildContext context) {
+    return component.child;
   }
 }
