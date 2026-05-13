@@ -9,15 +9,26 @@ class ContainerScope extends StatefulWidget {
   final ServiceProvider<BuildContext> serviceProvider;
   final Widget child;
 
-  const ContainerScope._({
+  ContainerScope._({
     super.key,
     required this.primary,
     required this.serviceProvider,
     required this.child,
-  });
+  }) : assert(
+         !primary ||
+             serviceProvider.providers
+                 .every((p) => p.providerType == ProviderType.scoped),
+         'A primary container should not contain scoped providers.',
+       ),
+       assert(
+         primary ||
+             serviceProvider.providers
+                 .every((p) => p.providerType != ProviderType.singleton),
+         'A scoped container should not contain singleton providers.',
+       );
 
   /// Creates a primary container scope.
-  const ContainerScope.primary({
+  ContainerScope.primary({
     Key? key,
     required ServiceProvider<BuildContext> serviceProvider,
     required Widget child,
