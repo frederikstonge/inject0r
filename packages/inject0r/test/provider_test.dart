@@ -5,6 +5,7 @@ void main() {
   group('Provider', () {
     test('stores create function and metadata', () {
       final provider = Provider<String, void>(
+        type: String,
         create: (_) => 'hello',
         providerType: ProviderType.singleton,
         dispose: null,
@@ -19,6 +20,7 @@ void main() {
 
     test('create receives context', () {
       final provider = Provider<String, int>(
+        type: String,
         create: (ctx) => 'value-$ctx',
         providerType: ProviderType.transient,
         dispose: null,
@@ -29,6 +31,7 @@ void main() {
 
     test('key defaults to null', () {
       final provider = Provider<String, void>(
+        type: String,
         create: (_) => 'hello',
         providerType: ProviderType.scoped,
         dispose: null,
@@ -40,6 +43,7 @@ void main() {
     test('dispose callback is stored', () {
       String? disposed;
       final provider = Provider<String, void>(
+        type: String,
         create: (_) => 'hello',
         providerType: ProviderType.singleton,
         dispose: (v) => disposed = v,

@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_inject0r/src/service_provider.dart';
 import 'package:inject0r/inject0r.dart';
@@ -78,9 +77,7 @@ class _ContainerScopeState extends State<ContainerScope> {
 
   /// Get an instance of type [T] from the container scope.
   T get<T>({required String? key}) {
-    final provider = widget.serviceProvider.providers
-        .whereType<Provider<T, BuildContext>>()
-        .firstWhereOrNull((p) => p.key == key);
+    final provider = widget.serviceProvider.getProvider<T>(key: key);
 
     assert(
       provider != null,
@@ -132,8 +129,8 @@ class _ContainerScopeState extends State<ContainerScope> {
     );
 
     final mergedServiceProvider = ServiceProvider()
-      ..providers.addAll(widget.serviceProvider.providers)
-      ..providers.addAll(scopedServiceProvider?.providers ?? []);
+      ..addAll(widget.serviceProvider.providers)
+      ..addAll(scopedServiceProvider?.providers ?? []);
 
     return ContainerScope._(
       key: key,

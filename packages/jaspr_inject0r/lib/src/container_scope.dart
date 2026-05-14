@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:inject0r/inject0r.dart';
 import 'package:jaspr/jaspr.dart';
 import 'package:jaspr_inject0r/src/service_provider.dart';
@@ -78,9 +77,7 @@ class _ContainerScopeState extends State<ContainerScope> {
 
   /// Get an instance of type [T] from the container scope.
   T get<T>({required String? key}) {
-    final provider = component.serviceProvider.providers
-        .whereType<Provider<T, BuildContext>>()
-        .firstWhereOrNull((p) => p.key == key);
+    final provider = component.serviceProvider.getProvider<T>(key: key);
 
     assert(
       provider != null,
@@ -133,8 +130,8 @@ class _ContainerScopeState extends State<ContainerScope> {
     );
 
     final mergedServiceProvider = ServiceProvider()
-      ..providers.addAll(component.serviceProvider.providers)
-      ..providers.addAll(scopedServiceProvider?.providers ?? []);
+      ..addAll(component.serviceProvider.providers)
+      ..addAll(scopedServiceProvider?.providers ?? []);
 
     return ContainerScope._(
       key: key,
