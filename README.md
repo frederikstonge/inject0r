@@ -97,6 +97,14 @@ Create child scopes to isolate dependencies per page, route, or feature:
 ContainerScope.createScope(
   context: context,
   child: const MyPage(),
+);
+```
+
+you can also register more scoped providers:
+```dart
+ContainerScope.createScope(
+  context: context,
+  child: const MyPage(),
   serviceProvider: ServiceProvider()
     ..registerScoped<PageCubit>(
       create: (context) => PageCubit(),
