@@ -8,26 +8,15 @@ class ContainerScope extends StatefulComponent {
   final ServiceProvider<BuildContext> serviceProvider;
   final Component child;
 
-  ContainerScope._({
+  const ContainerScope._({
     super.key,
     required this.primary,
     required this.serviceProvider,
     required this.child,
-  }) : assert(
-         !primary ||
-             serviceProvider.providers
-                 .every((p) => p.providerType == ProviderType.scoped),
-         'A primary container should not contain scoped providers.',
-       ),
-       assert(
-         primary ||
-             serviceProvider.providers
-                 .every((p) => p.providerType != ProviderType.singleton),
-         'A scoped container should not contain singleton providers.',
-       );
+  });
 
   /// Creates a primary container scope.
-  ContainerScope.primary({
+  const ContainerScope.primary({
     Key? key,
     required ServiceProvider<BuildContext> serviceProvider,
     required Component child,
@@ -50,10 +39,14 @@ class ContainerScope extends StatefulComponent {
   }
 
   /// Creates a new container scope from the current context.
+  /// 
+  /// If [serviceProvider] is provided, it must only contain scoped providers.
+  /// These will be merged with the primary container's providers.
   static ContainerScope createScope({
     Key? key,
     required BuildContext context,
     required Component child,
+    ServiceProvider<BuildContext>? serviceProvider,
   }) {
     final state = context.findAncestorStateOfType<_ContainerScopeState>();
     assert(
@@ -61,7 +54,7 @@ class ContainerScope extends StatefulComponent {
       'No ContainerScope found in the context. Make sure to wrap your component tree with a ContainerScope.',
     );
 
-    return state!.createScope(key, child);
+    return state!.createScope(key, child, serviceProvider);
   }
 
   @override
@@ -125,11 +118,21 @@ class _ContainerScopeState extends State<ContainerScope> {
   }
 
   /// Creates a new container scope with the current service provider.
-  ContainerScope createScope(Key? key, Component child) {
+  ContainerScope createScope(Key? key, Component child, ServiceProvider<BuildContext>? scopedServiceProvider) {
+    assert(
+      scopedServiceProvider == null ||
+          scopedServiceProvider.providers.every((p) => p.providerType == ProviderType.scoped),
+      'A scoped service provider should only contain scoped providers.',
+    );
+
+    final mergedServiceProvider = ServiceProvider<BuildContext>()
+      ..providers.addAll(component.serviceProvider.providers)
+      ..providers.addAll(scopedServiceProvider?.providers ?? []);
+
     return ContainerScope._(
       key: key,
       primary: false,
-      serviceProvider: component.serviceProvider,
+      serviceProvider: mergedServiceProvider,
       child: child,
     );
   }
@@ -149,7 +152,5 @@ class _ContainerScopeState extends State<ContainerScope> {
   }
 
   @override
-  Component build(BuildContext context) {
-    return component;
-  } 
+  Component build(BuildContext context) => component.child; 
 }

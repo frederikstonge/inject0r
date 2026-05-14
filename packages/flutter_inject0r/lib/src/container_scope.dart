@@ -9,26 +9,15 @@ class ContainerScope extends StatefulWidget {
   final ServiceProvider<BuildContext> serviceProvider;
   final Widget child;
 
-  ContainerScope._({
+  const ContainerScope._({
     super.key,
     required this.primary,
     required this.serviceProvider,
     required this.child,
-  }) : assert(
-         !primary ||
-             serviceProvider.providers
-                 .every((p) => p.providerType == ProviderType.scoped),
-         'A primary container should not contain scoped providers.',
-       ),
-       assert(
-         primary ||
-             serviceProvider.providers
-                 .every((p) => p.providerType != ProviderType.singleton),
-         'A scoped container should not contain singleton providers.',
-       );
+  }) ;
 
   /// Creates a primary container scope.
-  ContainerScope.primary({
+  const ContainerScope.primary({
     Key? key,
     required ServiceProvider<BuildContext> serviceProvider,
     required Widget child,
@@ -51,10 +40,14 @@ class ContainerScope extends StatefulWidget {
   }
 
   /// Creates a new container scope from the current context.
+  /// 
+  /// If [serviceProvider] is provided, it must only contain scoped providers.
+  /// These will be merged with the primary container's providers.
   static ContainerScope createScope({
     Key? key,
     required BuildContext context,
     required Widget child,
+    ServiceProvider<BuildContext>? serviceProvider,
   }) {
     final state = context.findAncestorStateOfType<_ContainerScopeState>();
     assert(
@@ -62,7 +55,7 @@ class ContainerScope extends StatefulWidget {
       'No ContainerScope found in the context. Make sure to wrap your widget tree with a ContainerScope.',
     );
     
-    return state!.createScope(key, child);
+    return state!.createScope(key, child, serviceProvider);
   }
 
   @override
@@ -122,11 +115,21 @@ class _ContainerScopeState extends State<ContainerScope> {
   }
 
   /// Creates a new container scope with the current service provider.
-  ContainerScope createScope(Key? key, Widget child) {
+  ContainerScope createScope(Key? key, Widget child, ServiceProvider<BuildContext>? scopedServiceProvider) {
+    assert(
+      scopedServiceProvider == null ||
+          scopedServiceProvider.providers.every((p) => p.providerType == ProviderType.scoped),
+      'A scoped service provider should only contain scoped providers.',
+    );
+
+    final mergedServiceProvider = ServiceProvider<BuildContext>()
+      ..providers.addAll(widget.serviceProvider.providers)
+      ..providers.addAll(scopedServiceProvider?.providers ?? []);
+
     return ContainerScope._(
       key: key,
       primary: false,
-      serviceProvider: widget.serviceProvider,
+      serviceProvider: mergedServiceProvider,
       child: child,
     );
   }

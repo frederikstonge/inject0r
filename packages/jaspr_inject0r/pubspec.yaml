@@ -5,7 +5,7 @@ homepage: https://www.github.com/frederikstonge/inject0r
 resolution: workspace
 
 environment:
-  sdk: ^3.11.5
+  sdk: ^3.11.0
 
 dependencies:
   collection: ^1.19.1
