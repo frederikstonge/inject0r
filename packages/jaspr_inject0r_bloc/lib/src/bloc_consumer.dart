@@ -48,7 +48,8 @@ class _BlocConsumerState<TBloc extends StateStreamable<TState>, TState>
         }
       }
 
-      if (component.rebuildWhen == null || component.rebuildWhen!(_state, data)) {
+      if (component.rebuildWhen == null ||
+          component.rebuildWhen!(_state, data)) {
         if (mounted) {
           setState(() {
             _state = data;

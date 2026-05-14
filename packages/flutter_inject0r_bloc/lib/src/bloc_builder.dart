@@ -18,9 +18,9 @@ class BlocBuilder<TBloc extends StateStreamable<TState>, TState>
     this.blocKey,
     this.rebuildWhen,
   }) : assert(
-          bloc == null || blocKey == null,
-          'You cannot provide both a bloc and a blocKey. Use one or the other.',
-        );
+         bloc == null || blocKey == null,
+         'You cannot provide both a bloc and a blocKey. Use one or the other.',
+       );
 
   @override
   State<BlocBuilder<TBloc, TState>> createState() =>

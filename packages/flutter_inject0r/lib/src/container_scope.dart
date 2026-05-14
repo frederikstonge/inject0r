@@ -2,7 +2,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:inject0r/inject0r.dart';
 
-
 /// A widget that provides a container scope for dependency injection.
 class ContainerScope extends StatefulWidget {
   final bool primary;
@@ -14,7 +13,7 @@ class ContainerScope extends StatefulWidget {
     required this.primary,
     required this.serviceProvider,
     required this.child,
-  }) ;
+  });
 
   /// Creates a primary container scope.
   const ContainerScope.primary({
@@ -40,7 +39,7 @@ class ContainerScope extends StatefulWidget {
   }
 
   /// Creates a new container scope from the current context.
-  /// 
+  ///
   /// If [serviceProvider] is provided, it must only contain scoped providers.
   /// These will be merged with the primary container's providers.
   static ContainerScope createScope({
@@ -54,7 +53,7 @@ class ContainerScope extends StatefulWidget {
       state != null,
       'No ContainerScope found in the context. Make sure to wrap your widget tree with a ContainerScope.',
     );
-    
+
     return state!.createScope(key, child, serviceProvider);
   }
 
@@ -82,7 +81,10 @@ class _ContainerScopeState extends State<ContainerScope> {
         .whereType<Provider<T, BuildContext>>()
         .firstWhereOrNull((p) => p.key == key);
 
-    assert(provider != null, 'No provider found for type $T${key != null ? ' with key $key' : ''}.');
+    assert(
+      provider != null,
+      'No provider found for type $T${key != null ? ' with key $key' : ''}.',
+    );
 
     assert(
       !(provider!.providerType == ProviderType.scoped && widget.primary),
@@ -115,10 +117,16 @@ class _ContainerScopeState extends State<ContainerScope> {
   }
 
   /// Creates a new container scope with the current service provider.
-  ContainerScope createScope(Key? key, Widget child, ServiceProvider<BuildContext>? scopedServiceProvider) {
+  ContainerScope createScope(
+    Key? key,
+    Widget child,
+    ServiceProvider<BuildContext>? scopedServiceProvider,
+  ) {
     assert(
       scopedServiceProvider == null ||
-          scopedServiceProvider.providers.every((p) => p.providerType == ProviderType.scoped),
+          scopedServiceProvider.providers.every(
+            (p) => p.providerType == ProviderType.scoped,
+          ),
       'A scoped service provider should only contain scoped providers.',
     );
 

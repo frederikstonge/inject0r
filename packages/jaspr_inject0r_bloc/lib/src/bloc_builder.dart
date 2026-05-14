@@ -18,9 +18,9 @@ class BlocBuilder<TBloc extends StateStreamable<TState>, TState>
     this.blocKey,
     this.rebuildWhen,
   }) : assert(
-          bloc == null || blocKey == null,
-          'You cannot provide both a bloc and a blocKey. Use one or the other.',
-        );
+         bloc == null || blocKey == null,
+         'You cannot provide both a bloc and a blocKey. Use one or the other.',
+       );
 
   @override
   State<BlocBuilder<TBloc, TState>> createState() =>
@@ -38,7 +38,8 @@ class _BlocBuilderState<TBloc extends StateStreamable<TState>, TState>
     _bloc = component.bloc ?? context.get<TBloc>(key: component.blocKey);
     _state = _bloc.state;
     _subscription = _bloc.stream.listen((data) {
-      if (component.rebuildWhen == null || component.rebuildWhen!(_state, data)) {
+      if (component.rebuildWhen == null ||
+          component.rebuildWhen!(_state, data)) {
         if (mounted) {
           setState(() {
             _state = data;

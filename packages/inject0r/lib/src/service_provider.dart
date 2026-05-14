@@ -7,7 +7,11 @@ class ServiceProvider<TContext> {
   final List<Provider> providers = [];
 
   /// Register a singleton provider of type [T] with the specified creation function and disposal function.
-  void registerSingleton<T>({required T Function(TContext context) create, String? key, void Function(T)? dispose}) {
+  void registerSingleton<T>({
+    required T Function(TContext context) create,
+    String? key,
+    void Function(T)? dispose,
+  }) {
     providers.add(
       Provider<T, TContext>(
         providerType: ProviderType.singleton,
@@ -19,7 +23,11 @@ class ServiceProvider<TContext> {
   }
 
   /// Register a scoped provider of type [T] with the specified creation function and disposal function.
-  void registerScoped<T>({ required T Function(TContext context) create, String? key, void Function(T)? dispose}) {
+  void registerScoped<T>({
+    required T Function(TContext context) create,
+    String? key,
+    void Function(T)? dispose,
+  }) {
     providers.add(
       Provider<T, TContext>(
         providerType: ProviderType.scoped,
@@ -31,7 +39,10 @@ class ServiceProvider<TContext> {
   }
 
   /// Register a transient provider of type [T] with the specified creation function and disposal function.
-  void registerTransient<T>({required T Function(TContext context) create, void Function(T)? dispose}) {
+  void registerTransient<T>({
+    required T Function(TContext context) create,
+    void Function(T)? dispose,
+  }) {
     providers.add(
       Provider<T, TContext>(
         providerType: ProviderType.transient,

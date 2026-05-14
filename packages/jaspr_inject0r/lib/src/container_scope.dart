@@ -39,7 +39,7 @@ class ContainerScope extends StatefulComponent {
   }
 
   /// Creates a new container scope from the current context.
-  /// 
+  ///
   /// If [serviceProvider] is provided, it must only contain scoped providers.
   /// These will be merged with the primary container's providers.
   static ContainerScope createScope({
@@ -118,10 +118,16 @@ class _ContainerScopeState extends State<ContainerScope> {
   }
 
   /// Creates a new container scope with the current service provider.
-  ContainerScope createScope(Key? key, Component child, ServiceProvider<BuildContext>? scopedServiceProvider) {
+  ContainerScope createScope(
+    Key? key,
+    Component child,
+    ServiceProvider<BuildContext>? scopedServiceProvider,
+  ) {
     assert(
       scopedServiceProvider == null ||
-          scopedServiceProvider.providers.every((p) => p.providerType == ProviderType.scoped),
+          scopedServiceProvider.providers.every(
+            (p) => p.providerType == ProviderType.scoped,
+          ),
       'A scoped service provider should only contain scoped providers.',
     );
 
@@ -152,5 +158,5 @@ class _ContainerScopeState extends State<ContainerScope> {
   }
 
   @override
-  Component build(BuildContext context) => component.child; 
+  Component build(BuildContext context) => component.child;
 }
