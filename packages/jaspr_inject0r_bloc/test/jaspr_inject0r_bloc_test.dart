@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:inject0r/inject0r.dart';
 import 'package:jaspr/dom.dart';
 import 'package:jaspr/jaspr.dart';
 import 'package:jaspr_inject0r/jaspr_inject0r.dart';
@@ -17,7 +16,7 @@ Component _wrapWithScope({
   CounterCubit? cubit,
   String? key,
 }) {
-  final sp = ServiceProvider<BuildContext>();
+  final sp = ServiceProvider();
   if (cubit != null) {
     sp.registerSingleton<CounterCubit>(
       create: (_) => cubit,
@@ -26,10 +25,7 @@ Component _wrapWithScope({
     );
   }
 
-  return ContainerScope.primary(
-    serviceProvider: sp,
-    child: child,
-  );
+  return ContainerScope.primary(serviceProvider: sp, child: child);
 }
 
 void main() {
@@ -41,9 +37,7 @@ void main() {
         _wrapWithScope(
           cubit: cubit,
           child: BlocBuilder<CounterCubit, int>(
-            builder: (context, state) => span([
-              Component.text('$state'),
-            ]),
+            builder: (context, state) => span([Component.text('$state')]),
           ),
         ),
       );
@@ -58,9 +52,7 @@ void main() {
         _wrapWithScope(
           cubit: cubit,
           child: BlocBuilder<CounterCubit, int>(
-            builder: (context, state) => span([
-              Component.text('$state'),
-            ]),
+            builder: (context, state) => span([Component.text('$state')]),
           ),
         ),
       );
@@ -81,9 +73,7 @@ void main() {
           cubit: cubit,
           child: BlocBuilder<CounterCubit, int>(
             rebuildWhen: (prev, curr) => curr.isEven,
-            builder: (context, state) => span([
-              Component.text('$state'),
-            ]),
+            builder: (context, state) => span([Component.text('$state')]),
           ),
         ),
       );
@@ -99,17 +89,16 @@ void main() {
       expect(find.text('2'), findsOneComponent);
     });
 
-    testComponents('uses provided bloc instance instead of container',
-        (tester) async {
+    testComponents('uses provided bloc instance instead of container', (
+      tester,
+    ) async {
       final cubit = CounterCubit();
 
       tester.pumpComponent(
         _wrapWithScope(
           child: BlocBuilder<CounterCubit, int>(
             bloc: cubit,
-            builder: (context, state) => span([
-              Component.text('$state'),
-            ]),
+            builder: (context, state) => span([Component.text('$state')]),
           ),
         ),
       );
@@ -131,9 +120,7 @@ void main() {
           key: 'myKey',
           child: BlocBuilder<CounterCubit, int>(
             blocKey: 'myKey',
-            builder: (context, state) => span([
-              Component.text('$state'),
-            ]),
+            builder: (context, state) => span([Component.text('$state')]),
           ),
         ),
       );
@@ -235,9 +222,7 @@ void main() {
           cubit: cubit,
           child: BlocListener<CounterCubit, int>(
             listener: (_, _) {},
-            child: span([
-              Component.text('child'),
-            ]),
+            child: span([Component.text('child')]),
           ),
         ),
       );
@@ -256,9 +241,7 @@ void main() {
           cubit: cubit,
           child: BlocConsumer<CounterCubit, int>(
             listener: (context, state) => listenedStates.add(state),
-            builder: (context, state) => span([
-              Component.text('$state'),
-            ]),
+            builder: (context, state) => span([Component.text('$state')]),
           ),
         ),
       );
@@ -273,8 +256,9 @@ void main() {
       expect(listenedStates, [1]);
     });
 
-    testComponents('respects listenWhen and rebuildWhen independently',
-        (tester) async {
+    testComponents('respects listenWhen and rebuildWhen independently', (
+      tester,
+    ) async {
       final cubit = CounterCubit();
       final listenedStates = <int>[];
 
@@ -285,9 +269,7 @@ void main() {
             listenWhen: (prev, curr) => curr.isOdd,
             rebuildWhen: (prev, curr) => curr.isEven,
             listener: (context, state) => listenedStates.add(state),
-            builder: (context, state) => span([
-              Component.text('$state'),
-            ]),
+            builder: (context, state) => span([Component.text('$state')]),
           ),
         ),
       );
@@ -313,9 +295,7 @@ void main() {
           child: BlocConsumer<CounterCubit, int>(
             bloc: cubit,
             listener: (_, _) {},
-            builder: (context, state) => span([
-              Component.text('$state'),
-            ]),
+            builder: (context, state) => span([Component.text('$state')]),
           ),
         ),
       );

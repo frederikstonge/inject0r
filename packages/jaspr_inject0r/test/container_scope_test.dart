@@ -1,4 +1,3 @@
-import 'package:inject0r/inject0r.dart';
 import 'package:jaspr/dom.dart';
 import 'package:jaspr/jaspr.dart';
 import 'package:jaspr_inject0r/jaspr_inject0r.dart';
@@ -19,20 +18,17 @@ void main() {
   group('ContainerScope', () {
     group('primary', () {
       testComponents('renders child', (tester) async {
-        final sp = ServiceProvider<BuildContext>();
+        final sp = ServiceProvider();
 
         tester.pumpComponent(
-          ContainerScope.primary(
-            serviceProvider: sp,
-            child: div([]),
-          ),
+          ContainerScope.primary(serviceProvider: sp, child: div([])),
         );
 
         expect(find.tag('div'), findsOneComponent);
       });
 
       testComponents('resolves a singleton', (tester) async {
-        final sp = ServiceProvider<BuildContext>()
+        final sp = ServiceProvider()
           ..registerSingleton<String>(create: (_) => 'hello');
 
         late String result;
@@ -51,10 +47,11 @@ void main() {
         expect(result, 'hello');
       });
 
-      testComponents('singleton returns same instance every time',
-          (tester) async {
+      testComponents('singleton returns same instance every time', (
+        tester,
+      ) async {
         var createCount = 0;
-        final sp = ServiceProvider<BuildContext>()
+        final sp = ServiceProvider()
           ..registerSingleton<_DisposableService>(
             create: (_) {
               createCount++;
@@ -83,7 +80,7 @@ void main() {
 
       testComponents('resolves a transient', (tester) async {
         var createCount = 0;
-        final sp = ServiceProvider<BuildContext>()
+        final sp = ServiceProvider()
           ..registerTransient<_DisposableService>(
             create: (_) {
               createCount++;
@@ -111,7 +108,7 @@ void main() {
       });
 
       testComponents('resolves with key', (tester) async {
-        final sp = ServiceProvider<BuildContext>()
+        final sp = ServiceProvider()
           ..registerSingleton<String>(create: (_) => 'default')
           ..registerSingleton<String>(key: 'other', create: (_) => 'keyed');
 
@@ -136,9 +133,10 @@ void main() {
     });
 
     group('createScope', () {
-      testComponents('child scope resolves singletons from root',
-          (tester) async {
-        final sp = ServiceProvider<BuildContext>()
+      testComponents('child scope resolves singletons from root', (
+        tester,
+      ) async {
+        final sp = ServiceProvider()
           ..registerSingleton<String>(create: (_) => 'from-root')
           ..registerScoped<int>(create: (_) => 42);
 
@@ -168,10 +166,11 @@ void main() {
         expect(childResult, 'from-root');
       });
 
-      testComponents('child scope creates its own scoped instances',
-          (tester) async {
+      testComponents('child scope creates its own scoped instances', (
+        tester,
+      ) async {
         var createCount = 0;
-        final sp = ServiceProvider<BuildContext>()
+        final sp = ServiceProvider()
           ..registerScoped<int>(
             create: (_) {
               createCount++;
@@ -214,12 +213,13 @@ void main() {
         expect(scopeAValue, isNot(scopeBValue));
       });
 
-      testComponents('child scope disposes its instances independently',
-          (tester) async {
+      testComponents('child scope disposes its instances independently', (
+        tester,
+      ) async {
         final rootService = _DisposableService();
         final scopedService = _DisposableService();
 
-        final sp = ServiceProvider<BuildContext>()
+        final sp = ServiceProvider()
           ..registerSingleton<_DisposableService>(
             create: (_) => rootService,
             dispose: (service) => service.close(),
@@ -227,7 +227,7 @@ void main() {
           ..registerScoped<_DisposableService>(
             key: "scoped",
             create: (_) => scopedService,
-            dispose: (service) => service.close(), 
+            dispose: (service) => service.close(),
           );
 
         final showScope = ValueNotifier(true);
@@ -273,13 +273,14 @@ void main() {
         expect(rootService.disposed, isFalse);
       });
 
-      testComponents('createScope merges scoped service providers',
-          (tester) async {
-        final sp = ServiceProvider<BuildContext>()
+      testComponents('createScope merges scoped service providers', (
+        tester,
+      ) async {
+        final sp = ServiceProvider()
           ..registerSingleton<String>(create: (_) => 'root-singleton')
           ..registerScoped<int>(create: (_) => 42);
 
-        final scopedSp = ServiceProvider<BuildContext>()
+        final scopedSp = ServiceProvider()
           ..registerScoped<double>(create: (_) => 3.14);
 
         late String singletonResult;
@@ -315,9 +316,10 @@ void main() {
     });
 
     group('BuildContext extensions', () {
-      testComponents('context.get<T>() resolves from nearest scope',
-          (tester) async {
-        final sp = ServiceProvider<BuildContext>()
+      testComponents('context.get<T>() resolves from nearest scope', (
+        tester,
+      ) async {
+        final sp = ServiceProvider()
           ..registerSingleton<String>(create: (_) => 'hello');
 
         late String result;
@@ -336,9 +338,10 @@ void main() {
         expect(result, 'hello');
       });
 
-      testComponents('context.get<T>(key:) resolves keyed instance',
-          (tester) async {
-        final sp = ServiceProvider<BuildContext>()
+      testComponents('context.get<T>(key:) resolves keyed instance', (
+        tester,
+      ) async {
+        final sp = ServiceProvider()
           ..registerSingleton<String>(key: 'a', create: (_) => 'alpha')
           ..registerSingleton<String>(key: 'b', create: (_) => 'beta');
 

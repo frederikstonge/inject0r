@@ -1,11 +1,12 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_inject0r/src/service_provider.dart';
 import 'package:inject0r/inject0r.dart';
 
 /// A widget that provides a container scope for dependency injection.
 class ContainerScope extends StatefulWidget {
   final bool primary;
-  final ServiceProvider<BuildContext> serviceProvider;
+  final ServiceProvider serviceProvider;
   final Widget child;
 
   const ContainerScope._({
@@ -18,7 +19,7 @@ class ContainerScope extends StatefulWidget {
   /// Creates a primary container scope.
   const ContainerScope.primary({
     Key? key,
-    required ServiceProvider<BuildContext> serviceProvider,
+    required ServiceProvider serviceProvider,
     required Widget child,
   }) : this._(
          key: key,
@@ -46,7 +47,7 @@ class ContainerScope extends StatefulWidget {
     Key? key,
     required BuildContext context,
     required Widget child,
-    ServiceProvider<BuildContext>? serviceProvider,
+    ServiceProvider? serviceProvider,
   }) {
     final state = context.findAncestorStateOfType<_ContainerScopeState>();
     assert(
@@ -120,7 +121,7 @@ class _ContainerScopeState extends State<ContainerScope> {
   ContainerScope createScope(
     Key? key,
     Widget child,
-    ServiceProvider<BuildContext>? scopedServiceProvider,
+    ServiceProvider? scopedServiceProvider,
   ) {
     assert(
       scopedServiceProvider == null ||
@@ -130,7 +131,7 @@ class _ContainerScopeState extends State<ContainerScope> {
       'A scoped service provider should only contain scoped providers.',
     );
 
-    final mergedServiceProvider = ServiceProvider<BuildContext>()
+    final mergedServiceProvider = ServiceProvider()
       ..providers.addAll(widget.serviceProvider.providers)
       ..providers.addAll(scopedServiceProvider?.providers ?? []);
 

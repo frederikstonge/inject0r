@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_inject0r/flutter_inject0r.dart';
 import 'package:flutter_inject0r_bloc/flutter_inject0r_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:inject0r/inject0r.dart';
 
 class CounterCubit extends Cubit<int> {
   CounterCubit() : super(0);
@@ -16,7 +15,7 @@ Widget _wrapWithScope({
   CounterCubit? cubit,
   String? key,
 }) {
-  final sp = ServiceProvider<BuildContext>();
+  final sp = ServiceProvider();
   if (cubit != null) {
     sp.registerSingleton<CounterCubit>(
       create: (_) => cubit,
@@ -25,10 +24,7 @@ Widget _wrapWithScope({
     );
   }
 
-  return ContainerScope.primary(
-    serviceProvider: sp,
-    child: child,
-  );
+  return ContainerScope.primary(serviceProvider: sp, child: child);
 }
 
 void main() {
@@ -40,10 +36,8 @@ void main() {
         _wrapWithScope(
           cubit: cubit,
           child: BlocBuilder<CounterCubit, int>(
-            builder: (context, state) => Text(
-              '$state',
-              textDirection: TextDirection.ltr,
-            ),
+            builder: (context, state) =>
+                Text('$state', textDirection: TextDirection.ltr),
           ),
         ),
       );
@@ -58,10 +52,8 @@ void main() {
         _wrapWithScope(
           cubit: cubit,
           child: BlocBuilder<CounterCubit, int>(
-            builder: (context, state) => Text(
-              '$state',
-              textDirection: TextDirection.ltr,
-            ),
+            builder: (context, state) =>
+                Text('$state', textDirection: TextDirection.ltr),
           ),
         ),
       );
@@ -82,10 +74,8 @@ void main() {
           cubit: cubit,
           child: BlocBuilder<CounterCubit, int>(
             rebuildWhen: (prev, curr) => curr.isEven,
-            builder: (context, state) => Text(
-              '$state',
-              textDirection: TextDirection.ltr,
-            ),
+            builder: (context, state) =>
+                Text('$state', textDirection: TextDirection.ltr),
           ),
         ),
       );
@@ -101,18 +91,17 @@ void main() {
       expect(find.text('2'), findsOneWidget);
     });
 
-    testWidgets('uses provided bloc instance instead of container',
-        (tester) async {
+    testWidgets('uses provided bloc instance instead of container', (
+      tester,
+    ) async {
       final cubit = CounterCubit();
 
       await tester.pumpWidget(
         _wrapWithScope(
           child: BlocBuilder<CounterCubit, int>(
             bloc: cubit,
-            builder: (context, state) => Text(
-              '$state',
-              textDirection: TextDirection.ltr,
-            ),
+            builder: (context, state) =>
+                Text('$state', textDirection: TextDirection.ltr),
           ),
         ),
       );
@@ -134,10 +123,8 @@ void main() {
           key: 'myKey',
           child: BlocBuilder<CounterCubit, int>(
             blocKey: 'myKey',
-            builder: (context, state) => Text(
-              '$state',
-              textDirection: TextDirection.ltr,
-            ),
+            builder: (context, state) =>
+                Text('$state', textDirection: TextDirection.ltr),
           ),
         ),
       );
@@ -152,18 +139,14 @@ void main() {
         _wrapWithScope(
           cubit: cubit,
           child: BlocBuilder<CounterCubit, int>(
-            builder: (context, state) => Text(
-              '$state',
-              textDirection: TextDirection.ltr,
-            ),
+            builder: (context, state) =>
+                Text('$state', textDirection: TextDirection.ltr),
           ),
         ),
       );
 
       // Remove from tree
-      await tester.pumpWidget(
-        _wrapWithScope(child: const SizedBox()),
-      );
+      await tester.pumpWidget(_wrapWithScope(child: const SizedBox()));
 
       // Emitting after dispose should not cause errors
       cubit.increment();
@@ -263,7 +246,7 @@ void main() {
         _wrapWithScope(
           cubit: cubit,
           child: BlocListener<CounterCubit, int>(
-            listener: (_, __) {},
+            listener: (_, _) {},
             child: const Text('child', textDirection: TextDirection.ltr),
           ),
         ),
@@ -286,9 +269,7 @@ void main() {
         ),
       );
 
-      await tester.pumpWidget(
-        _wrapWithScope(child: const SizedBox()),
-      );
+      await tester.pumpWidget(_wrapWithScope(child: const SizedBox()));
 
       cubit.increment();
       await tester.pumpAndSettle();
@@ -307,10 +288,8 @@ void main() {
           cubit: cubit,
           child: BlocConsumer<CounterCubit, int>(
             listener: (context, state) => listenedStates.add(state),
-            builder: (context, state) => Text(
-              '$state',
-              textDirection: TextDirection.ltr,
-            ),
+            builder: (context, state) =>
+                Text('$state', textDirection: TextDirection.ltr),
           ),
         ),
       );
@@ -325,8 +304,9 @@ void main() {
       expect(listenedStates, [1]);
     });
 
-    testWidgets('respects listenWhen and rebuildWhen independently',
-        (tester) async {
+    testWidgets('respects listenWhen and rebuildWhen independently', (
+      tester,
+    ) async {
       final cubit = CounterCubit();
       final listenedStates = <int>[];
 
@@ -337,10 +317,8 @@ void main() {
             listenWhen: (prev, curr) => curr.isOdd,
             rebuildWhen: (prev, curr) => curr.isEven,
             listener: (context, state) => listenedStates.add(state),
-            builder: (context, state) => Text(
-              '$state',
-              textDirection: TextDirection.ltr,
-            ),
+            builder: (context, state) =>
+                Text('$state', textDirection: TextDirection.ltr),
           ),
         ),
       );
@@ -365,11 +343,9 @@ void main() {
         _wrapWithScope(
           child: BlocConsumer<CounterCubit, int>(
             bloc: cubit,
-            listener: (_, __) {},
-            builder: (context, state) => Text(
-              '$state',
-              textDirection: TextDirection.ltr,
-            ),
+            listener: (_, _) {},
+            builder: (context, state) =>
+                Text('$state', textDirection: TextDirection.ltr),
           ),
         ),
       );
@@ -389,17 +365,13 @@ void main() {
           cubit: cubit,
           child: BlocConsumer<CounterCubit, int>(
             listener: (context, state) => listenedStates.add(state),
-            builder: (context, state) => Text(
-              '$state',
-              textDirection: TextDirection.ltr,
-            ),
+            builder: (context, state) =>
+                Text('$state', textDirection: TextDirection.ltr),
           ),
         ),
       );
 
-      await tester.pumpWidget(
-        _wrapWithScope(child: const SizedBox()),
-      );
+      await tester.pumpWidget(_wrapWithScope(child: const SizedBox()));
 
       cubit.increment();
       await tester.pumpAndSettle();

@@ -1,4 +1,4 @@
-name: inject0r_example
+name: inject0r_shared_example
 description: A starting point for Dart libraries or applications.
 version: 1.0.0
 resolution: workspace

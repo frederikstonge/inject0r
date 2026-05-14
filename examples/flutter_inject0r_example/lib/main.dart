@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inject0r/flutter_inject0r.dart';
 import 'package:flutter_inject0r_example/app.dart';
-import 'package:inject0r/inject0r.dart';
-import 'package:inject0r_example/inject0r_example.dart';
+import 'package:inject0r_shared_example/inject0r_shared_example.dart';
 
 void main() {
-  final serviceProvider = ServiceProvider<BuildContext>();
+  final serviceProvider = ServiceProvider();
   serviceProvider.registerSingleton<String>(
     create: (context) {
       final value = 'Hello, Inject0r!';

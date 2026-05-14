@@ -4,8 +4,7 @@
 /// To run code on the client, check the `main.client.dart` file.
 library;
 
-import 'package:inject0r/inject0r.dart';
-import 'package:inject0r_example/inject0r_example.dart';
+import 'package:inject0r_shared_example/inject0r_shared_example.dart';
 import 'package:jaspr/dom.dart';
 // Server-specific Jaspr import.
 import 'package:jaspr/server.dart';
@@ -23,7 +22,7 @@ void main() {
     options: defaultServerOptions,
   );
 
-  final serviceProvider = ServiceProvider<BuildContext>();
+  final serviceProvider = ServiceProvider();
   serviceProvider.registerSingleton<String>(
     create: (context) {
       final value = 'Hello, Inject0r!';

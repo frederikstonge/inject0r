@@ -1,11 +1,12 @@
 import 'package:collection/collection.dart';
 import 'package:inject0r/inject0r.dart';
 import 'package:jaspr/jaspr.dart';
+import 'package:jaspr_inject0r/src/service_provider.dart';
 
 /// A component that provides a container scope for dependency injection.
 class ContainerScope extends StatefulComponent {
   final bool primary;
-  final ServiceProvider<BuildContext> serviceProvider;
+  final ServiceProvider serviceProvider;
   final Component child;
 
   const ContainerScope._({
@@ -18,7 +19,7 @@ class ContainerScope extends StatefulComponent {
   /// Creates a primary container scope.
   const ContainerScope.primary({
     Key? key,
-    required ServiceProvider<BuildContext> serviceProvider,
+    required ServiceProvider serviceProvider,
     required Component child,
   }) : this._(
          key: key,
@@ -46,7 +47,7 @@ class ContainerScope extends StatefulComponent {
     Key? key,
     required BuildContext context,
     required Component child,
-    ServiceProvider<BuildContext>? serviceProvider,
+    ServiceProvider? serviceProvider,
   }) {
     final state = context.findAncestorStateOfType<_ContainerScopeState>();
     assert(
@@ -121,7 +122,7 @@ class _ContainerScopeState extends State<ContainerScope> {
   ContainerScope createScope(
     Key? key,
     Component child,
-    ServiceProvider<BuildContext>? scopedServiceProvider,
+    ServiceProvider? scopedServiceProvider,
   ) {
     assert(
       scopedServiceProvider == null ||
@@ -131,7 +132,7 @@ class _ContainerScopeState extends State<ContainerScope> {
       'A scoped service provider should only contain scoped providers.',
     );
 
-    final mergedServiceProvider = ServiceProvider<BuildContext>()
+    final mergedServiceProvider = ServiceProvider()
       ..providers.addAll(component.serviceProvider.providers)
       ..providers.addAll(scopedServiceProvider?.providers ?? []);
 

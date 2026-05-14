@@ -20,7 +20,6 @@ class App extends StatefulComponent {
 }
 
 class AppState extends State<App> {
-
   @override
   void initState() {
     super.initState();
@@ -38,7 +37,7 @@ class AppState extends State<App> {
   @override
   Component build(BuildContext context) {
     // This method is rerun every time the component is rebuilt.
-    
+
     // Renders a <div class="main"> html element with children.
     return div(classes: 'main', [
       const Home(),

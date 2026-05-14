@@ -40,7 +40,7 @@
 ### 1️⃣ Register your dependencies
 
 ```dart
-final serviceProvider = ServiceProvider<BuildContext>();
+final serviceProvider = ServiceProvider();
 
 serviceProvider.registerSingleton<ApiClient>(
   create: (context) => ApiClient(),
@@ -97,7 +97,7 @@ Create child scopes to isolate dependencies per page, route, or feature:
 ContainerScope.createScope(
   context: context,
   child: const MyPage(),
-  serviceProvider: ServiceProvider<BuildContext>()
+  serviceProvider: ServiceProvider()
     ..registerScoped<PageCubit>(
       create: (context) => PageCubit(),
       dispose: (cubit) => cubit.close(),
