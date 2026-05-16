@@ -35,30 +35,62 @@ class _BlocConsumerState<TBloc extends StateStreamable<TState>, TState>
     extends State<BlocConsumer<TBloc, TState>> {
   late TBloc _bloc;
   late TState _state;
+  late TState _previousState;
   late StreamSubscription<TState> _subscription;
 
   @override
   void initState() {
     _bloc = component.bloc ?? context.get<TBloc>(key: component.blocKey);
     _state = _bloc.state;
+    _previousState = _state;
+    _subscribe();
+    super.initState();
+  }
+
+  @override
+  void didUpdateComponent(BlocConsumer<TBloc, TState> oldComponent) {
+    super.didUpdateComponent(oldComponent);
+    final currentBloc = component.bloc ?? context.get<TBloc>(key: component.blocKey);
+    if (_bloc != currentBloc) {
+      _subscription.cancel();
+      _bloc = currentBloc;
+      _previousState = _bloc.state;
+      _state = _bloc.state;
+      _subscribe();
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final currentBloc = component.bloc ?? context.get<TBloc>(key: component.blocKey);
+    if (_bloc != currentBloc) {
+      _subscription.cancel();
+      _bloc = currentBloc;
+      _previousState = _bloc.state;
+      _state = _bloc.state;
+      _subscribe();
+    }
+  }
+
+  void _subscribe() {
     _subscription = _bloc.stream.listen((data) {
-      if (component.listenWhen == null || component.listenWhen!(_state, data)) {
+      if (component.listenWhen == null || component.listenWhen!(_previousState, data)) {
         if (mounted) {
           component.listener(context, data);
         }
       }
 
       if (component.rebuildWhen == null ||
-          component.rebuildWhen!(_state, data)) {
+          component.rebuildWhen!(_previousState, data)) {
         if (mounted) {
           setState(() {
             _state = data;
           });
         }
       }
+      _previousState = data;
     });
-
-    super.initState();
   }
 
   @override

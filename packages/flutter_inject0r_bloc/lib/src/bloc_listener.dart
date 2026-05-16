@@ -32,22 +32,50 @@ class BlocListener<TBloc extends StateStreamable<TState>, TState>
 class _BlocListenerState<TBloc extends StateStreamable<TState>, TState>
     extends State<BlocListener<TBloc, TState>> {
   late TBloc _bloc;
-  late TState _state;
+  late TState _previousState;
   late StreamSubscription<TState> _subscription;
 
   @override
   void initState() {
     _bloc = widget.bloc ?? context.get<TBloc>(key: widget.blocKey);
-    _state = _bloc.state;
+    _previousState = _bloc.state;
+    _subscribe();
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(BlocListener<TBloc, TState> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    final currentBloc = widget.bloc ?? context.get<TBloc>(key: widget.blocKey);
+    if (_bloc != currentBloc) {
+      _subscription.cancel();
+      _bloc = currentBloc;
+      _previousState = _bloc.state;
+      _subscribe();
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final currentBloc = widget.bloc ?? context.get<TBloc>(key: widget.blocKey);
+    if (_bloc != currentBloc) {
+      _subscription.cancel();
+      _bloc = currentBloc;
+      _previousState = _bloc.state;
+      _subscribe();
+    }
+  }
+
+  void _subscribe() {
     _subscription = _bloc.stream.listen((data) {
-      if (widget.listenWhen == null || widget.listenWhen!(_state, data)) {
+      if (widget.listenWhen == null || widget.listenWhen!(_previousState, data)) {
         if (mounted) {
           widget.listener(context, data);
         }
       }
+      _previousState = data;
     });
-
-    super.initState();
   }
 
   @override
