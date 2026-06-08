@@ -19,6 +19,23 @@ jobs:
         with:
           channel: stable
 
+      - name: Copy LICENSE and changelog
+        run: |
+          cp LICENSE packages/inject0r/
+          cp CHANGELOG.md packages/inject0r/
+
+          cp LICENSE packages/flutter_inject0r/
+          cp CHANGELOG.md packages/flutter_inject0r/
+
+          cp LICENSE packages/jaspr_inject0r/
+          cp CHANGELOG.md packages/jaspr_inject0r/
+
+          cp LICENSE packages/flutter_inject0r_bloc/
+          cp CHANGELOG.md packages/flutter_inject0r_bloc/
+          
+          cp LICENSE packages/jaspr_inject0r_bloc/
+          cp CHANGELOG.md packages/jaspr_inject0r_bloc/
+
       - name: Install dependencies
         run: flutter pub get
 
