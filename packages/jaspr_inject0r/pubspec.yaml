@@ -1,5 +1,5 @@
 name: jaspr_inject0r
-description: "A new Flutter package project."
+description: "A lightweight dependency injection library for Flutter & Jaspr"
 version: 0.0.1
 homepage: https://www.github.com/frederikstonge/inject0r
 resolution: workspace
