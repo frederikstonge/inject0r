@@ -1,0 +1,43 @@
+name: Publish packages
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dart-lang/setup-dart@v1
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Publish inject0r
+        run: dart pub publish --force
+        working-directory: packages/inject0r
+
+      - name: Publish flutter_inject0r
+        run: dart pub publish --force
+        working-directory: packages/flutter_inject0r
+
+      - name: Publish jaspr_inject0r
+        run: dart pub publish --force
+        working-directory: packages/jaspr_inject0r
+
+      - name: Publish flutter_inject0r_bloc
+        run: dart pub publish --force
+        working-directory: packages/flutter_inject0r_bloc
+
+      - name: Publish jaspr_inject0r_bloc
+        run: dart pub publish --force
+        working-directory: packages/jaspr_inject0r_bloc
