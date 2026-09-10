@@ -1,11 +1,11 @@
 name: inject0r
 description: "A lightweight dependency injection library for Flutter & Jaspr"
-version: 0.0.2
+version: 0.0.3
 homepage: https://www.github.com/frederikstonge/inject0r
 resolution: workspace
 
 environment:
-  sdk: ^3.11.0
+  sdk: ^3.13.0
 
 dependencies:
   collection: ^1.19.1

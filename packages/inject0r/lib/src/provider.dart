@@ -6,7 +6,7 @@ class Provider<T, TContext> {
   final T Function(TContext context) create;
   final ProviderType providerType;
   final String? key;
-  final void Function(T)? dispose;
+  final void Function(T instance)? dispose;
 
   const Provider({
     required this.type,
