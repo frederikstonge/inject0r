@@ -11,14 +11,14 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      # Setup Flutter SDK and automated pub.dev credentials
-      - uses: flutter-actions/setup-flutter@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.47.x
+
       - uses: flutter-actions/setup-pubdev-credentials@v1
-
-      - name: Flutter Doctor
-        run: flutter doctor -v
 
       - name: Copy LICENSE and changelog
         run: |
@@ -36,9 +36,6 @@ jobs:
           
           cp LICENSE packages/jaspr_inject0r_bloc/
           cp CHANGELOG.md packages/jaspr_inject0r_bloc/
-
-      - name: Clean pub cache
-        run: flutter pub cache clean
 
       - name: Install dependencies
         run: flutter pub get
