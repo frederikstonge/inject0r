@@ -5,7 +5,7 @@ class Instance<T> {
   final T value;
   final ProviderType providerType;
   final String? key;
-  final void Function(T)? dispose;
+  final void Function(T instance)? dispose;
 
   Instance({
     required this.value,

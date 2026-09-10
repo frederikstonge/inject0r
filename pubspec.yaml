@@ -2,8 +2,8 @@ name: inject0r_workspace
 publish_to: none
 
 environment:
-  sdk: ^3.11.0
+  sdk: ^3.13.2
 
 workspace:
   - packages/*
-  - examples/*
+  - example/*

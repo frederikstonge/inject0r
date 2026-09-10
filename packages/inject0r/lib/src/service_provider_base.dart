@@ -29,7 +29,7 @@ class ServiceProviderBase<TContext> {
   void registerSingleton<T>({
     required T Function(TContext context) create,
     String? key,
-    void Function(T)? dispose,
+    void Function(T instance)? dispose,
   }) {
     assert(
       providers.where((p) => p.key == key && p.type == T).isEmpty,
@@ -51,7 +51,7 @@ class ServiceProviderBase<TContext> {
   void registerScoped<T>({
     required T Function(TContext context) create,
     String? key,
-    void Function(T)? dispose,
+    void Function(T instance)? dispose,
   }) {
     assert(
       providers.where((p) => p.key == key && p.type == T).isEmpty,
@@ -73,7 +73,7 @@ class ServiceProviderBase<TContext> {
   void registerTransient<T>({
     required T Function(TContext context) create,
     String? key,
-    void Function(T)? dispose,
+    void Function(T instance)? dispose,
   }) {
     assert(
       providers.where((p) => p.key == key && p.type == T).isEmpty,

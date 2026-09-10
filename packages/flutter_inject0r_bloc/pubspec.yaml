@@ -1,18 +1,17 @@
 name: flutter_inject0r_bloc
 description: "A lightweight dependency injection library for Flutter & Jaspr"
-version: 0.0.2
+version: 0.0.3
 homepage: https://www.github.com/frederikstonge/inject0r
 resolution: workspace
 
 environment:
-  sdk: ^3.11.0
-  flutter: ^3.41.0
+  sdk: ^3.13.2
 
 dependencies:
   bloc: ^9.0.0
   flutter:
     sdk: flutter
-  flutter_inject0r: ^0.0.2
+  flutter_inject0r: ^0.0.3
 
 dev_dependencies:
   flutter_test:
