@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_inject0r/flutter_inject0r.dart';
 import 'package:flutter_inject0r_bloc/flutter_inject0r_bloc.dart';
 import 'package:inject0r_shared_example/inject0r_shared_example.dart';
