@@ -20,8 +20,6 @@ jobs:
           channel: stable
           flutter-version: 3.47.x
 
-      - uses: flutter-actions/setup-pubdev-credentials@v1
-
       - name: Copy LICENSE and changelog
         run: |
           cp LICENSE packages/inject0r/
