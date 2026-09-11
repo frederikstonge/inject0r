@@ -6,19 +6,50 @@ on:
       - 'v[0-9]+.[0-9]+.[0-9]+*'
 
 jobs:
-  publish:
+  publish-inject0r:
     permissions:
       id-token: write # Required for authentication using OIDC
-    strategy:
-      max-parallel: 1
-      matrix:
-        package:
-          - inject0r
-          - flutter_inject0r
-          - jaspr_inject0r
-          - flutter_inject0r_bloc
-          - jaspr_inject0r_bloc
 
     uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
     with:
-      working-directory: packages/${{ matrix.package }}
+      working-directory: packages/inject0r
+
+  publish-flutter_inject0r:
+    needs: publish-inject0r
+    if: always()
+    permissions:
+      id-token: write # Required for authentication using OIDC
+
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    with:
+      working-directory: packages/flutter_inject0r
+
+  publish-flutter_inject0r_bloc:
+    needs: publish-flutter_inject0r
+    if: always()
+    permissions:
+      id-token: write # Required for authentication using OIDC
+
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    with:
+      working-directory: packages/flutter_inject0r_bloc
+
+  publish-jaspr_inject0r:
+    needs: publish-inject0r
+    if: always()
+    permissions:
+      id-token: write # Required for authentication using OIDC
+
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    with:
+      working-directory: packages/jaspr_inject0r
+
+  publish-jaspr_inject0r_bloc:
+    needs: publish-jaspr_inject0r
+    if: always()
+    permissions:
+      id-token: write # Required for authentication using OIDC
+
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    with:
+      working-directory: packages/jaspr_inject0r_bloc
