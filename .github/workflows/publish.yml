@@ -7,55 +7,17 @@ on:
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
     permissions:
-      id-token: write
-      contents: read
+      id-token: write # Required for authentication using OIDC
+    strategy:
+      matrix:
+        package:
+          - inject0r
+          - flutter_inject0r
+          - jaspr_inject0r
+          - flutter_inject0r_bloc
+          - jaspr_inject0r_bloc
 
-    steps:
-      - uses: actions/checkout@v7
-
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-          flutter-version: 3.47.x
-
-      - name: Copy LICENSE and changelog
-        run: |
-          cp LICENSE packages/inject0r/
-          cp CHANGELOG.md packages/inject0r/
-
-          cp LICENSE packages/flutter_inject0r/
-          cp CHANGELOG.md packages/flutter_inject0r/
-
-          cp LICENSE packages/jaspr_inject0r/
-          cp CHANGELOG.md packages/jaspr_inject0r/
-
-          cp LICENSE packages/flutter_inject0r_bloc/
-          cp CHANGELOG.md packages/flutter_inject0r_bloc/
-          
-          cp LICENSE packages/jaspr_inject0r_bloc/
-          cp CHANGELOG.md packages/jaspr_inject0r_bloc/
-
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Publish inject0r
-        run: dart pub publish --force
-        working-directory: packages/inject0r
-
-      - name: Publish flutter_inject0r
-        run: dart pub publish --force
-        working-directory: packages/flutter_inject0r
-
-      - name: Publish jaspr_inject0r
-        run: dart pub publish --force
-        working-directory: packages/jaspr_inject0r
-
-      - name: Publish flutter_inject0r_bloc
-        run: dart pub publish --force
-        working-directory: packages/flutter_inject0r_bloc
-
-      - name: Publish jaspr_inject0r_bloc
-        run: dart pub publish --force
-        working-directory: packages/jaspr_inject0r_bloc
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    with:
+      working-directory: packages/${{ matrix.package }}
