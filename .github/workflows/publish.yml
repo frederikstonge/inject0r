@@ -10,6 +10,7 @@ jobs:
     permissions:
       id-token: write # Required for authentication using OIDC
     strategy:
+      max-parallel: 1
       matrix:
         package:
           - inject0r
