@@ -1,3 +1,6 @@
+## 0.0.4
+- Fix issue with proiders
+
 ## 0.0.3
 - Update to flutter 3.47
 - Remove material dependency

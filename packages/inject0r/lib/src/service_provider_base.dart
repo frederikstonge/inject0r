@@ -32,11 +32,11 @@ class ServiceProviderBase<TContext> {
     void Function(T instance)? dispose,
   }) {
     assert(
-      providers.where((p) => p.key == key && p.type == T).isEmpty,
+      _providers.where((p) => p.key == key && p.type == T).isEmpty,
       'A provider with the same type and key already exists.',
     );
 
-    providers.add(
+    _providers.add(
       Provider<T, TContext>(
         type: T,
         providerType: ProviderType.singleton,
@@ -54,11 +54,11 @@ class ServiceProviderBase<TContext> {
     void Function(T instance)? dispose,
   }) {
     assert(
-      providers.where((p) => p.key == key && p.type == T).isEmpty,
+      _providers.where((p) => p.key == key && p.type == T).isEmpty,
       'A provider with the same type and key already exists.',
     );
     
-    providers.add(
+    _providers.add(
       Provider<T, TContext>(
         type: T,
         providerType: ProviderType.scoped,
@@ -76,11 +76,11 @@ class ServiceProviderBase<TContext> {
     void Function(T instance)? dispose,
   }) {
     assert(
-      providers.where((p) => p.key == key && p.type == T).isEmpty,
+      _providers.where((p) => p.key == key && p.type == T).isEmpty,
       'A provider with the same type and key already exists.',
     );
 
-    providers.add(
+    _providers.add(
       Provider<T, TContext>(
         type: T,
         providerType: ProviderType.transient,
@@ -94,7 +94,7 @@ class ServiceProviderBase<TContext> {
   Provider<T, TContext>? getProvider<T>({
     required String? key,
   }) {
-    return providers
+    return _providers
         .whereType<Provider<T, TContext>>()
         .firstWhereOrNull((p) => p.key == key);
   }
